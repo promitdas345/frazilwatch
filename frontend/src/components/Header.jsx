@@ -7,7 +7,7 @@ export function Header() {
       </div>
       <div className="header-right">
         <span className="header-ibm">
-          Powered by <strong>IBM watsonx Orchestrate</strong> + Llama-3-1-70B-Instruct
+          Powered by <strong>IBM watsonx Orchestrate</strong> + llama-3-3-70b-instruct
         </span>
       </div>
     </header>

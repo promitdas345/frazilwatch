@@ -13,7 +13,7 @@ frazil-ice formation at the Bay d'Espoir hydroelectric plant in Newfoundland
 using **real live Environment Canada weather data**, then resolves a conflict
 between frazil risk and grid-capacity limits to recommend a pre-emptive grid
 response. Three specialist agents (Climatology, Dispatch) plus a Supervisor
-that makes the final decision. Reasoning model is `llama-3-1-70b-instruct`.
+that makes the final decision. Reasoning model is `llama-3-3-70b-instruct`.
 The internal grid telemetry is **simulated** via a Python MCP server (NL Hydro's
 real SCADA is proprietary — simulation is the honest, intended approach).
 
@@ -108,7 +108,7 @@ already set to LIL=781, demand=1450. Leave it there for the demo.
 
 ## Key facts (verified, safe to rely on)
 
-- Reasoning model string: `watsonx/meta-llama/llama-3-1-70b-instruct`
+- Reasoning model string: `watsonx/meta-llama/llama-3-3-70b-instruct`
 - Llama 3 emits a `<|tool_call|>` token before its JSON tool-call payload; if
   serving via vLLM, the parser flags are `--enable-auto-tool-choice` and
   `--tool-call-parser llama3_json`. (Inside Orchestrate this is handled for you.)

@@ -1,7 +1,7 @@
 # FrazilWatch — Team Namles · 48-Hour Battle Plan
 ### IBM x MUN watsonx Hackathon · May 29–31, 2026
 
-> **The one-liner:** A predictive multi-agent AI system that detects frazil-ice formation at Bay d'Espoir hours before it chokes the intakes, then autonomously coordinates the NL grid response — pre-emptive offload, Maritime Link imports, industrial load-shed, public conservation alert — before the lights go out. Built on watsonx Orchestrate + Llama-3-1-70B-Instruct, triggered by **real live Environment Canada data**.
+> **The one-liner:** A predictive multi-agent AI system that detects frazil-ice formation at Bay d'Espoir hours before it chokes the intakes, then autonomously coordinates the NL grid response — pre-emptive offload, Maritime Link imports, industrial load-shed, public conservation alert — before the lights go out. Built on watsonx Orchestrate + llama-3-3-70b-instruct, triggered by **real live Environment Canada data**.
 
 ---
 
@@ -49,7 +49,7 @@
 | Layer | Tool | Notes |
 |---|---|---|
 | Orchestration | watsonx Orchestrate + ADK | `pip install --upgrade ibm-watsonx-orchestrate`, Python 3.11–3.13 |
-| Reasoning model | `watsonx/meta-llama/llama-3-1-70b-instruct` | function-calling optimized, Apache 2.0 |
+| Reasoning model | `watsonx/meta-llama/llama-3-3-70b-instruct` | function-calling optimized, Apache 2.0 |
 | Real data | MSC GeoMet OGC API | `https://api.weather.gc.ca/` — no key, CQL2 filtering, CSV export |
 | Simulated data | Python MCP server (FastMCP) | grid telemetry — LIL load, Maritime headroom, unit status |
 | Backend glue | FastAPI | wraps tools, connects to Orchestrate |
@@ -171,7 +171,7 @@ Two IBM Cloud env seats: **Promit + Hassan** (already the strongest platform pai
 - Show the JSON manifest + Llama's plain-English justification appearing.
 
 **3:15–4:15 — The Architecture**
-> "Three specialist agents, one supervisor, powered by Llama-3-1-70B-Instruct. Real weather data through Environment Canada's API. Grid telemetry through a Model Context Protocol server. The supervisor uses deterministic logic — not guesswork — so it never hallucinates a grid command."
+> "Three specialist agents, one supervisor, powered by llama-3-3-70b-instruct. Real weather data through Environment Canada's API. Grid telemetry through a Model Context Protocol server. The supervisor uses deterministic logic — not guesswork — so it never hallucinates a grid command."
 
 **4:15–5:00 — The Impact**
 > "This gives operators 6 hours of lead time instead of zero. It turns divers-in-the-water into a planned, controlled response. One prevented event saves millions in emergency imports and avoided-blackout costs. And frazil ice threatens every cold-climate hydro operator on Earth — from BC Hydro to Hydro-Québec to Norway. NL Hydro is the beachhead."
@@ -183,7 +183,7 @@ Two IBM Cloud env seats: **Promit + Hassan** (already the strongest platform pai
 **Ask the IBM mentors (Saturday 10am):**
 1. "Does this Supervisor-Collaborator setup match the multi-agent patterns you've seen score well in Orchestrate?"
 2. "For the simulated grid data, is an MCP server the right approach, or do you recommend OpenAPI tool import?"
-3. "Any gotchas with Llama-3-1-70B-Instruct tool-calling we should know about before we build the prompts?"
+3. "Any gotchas with llama-3-3-70b-instruct tool-calling we should know about before we build the prompts?"
 
 **Hard Q&A questions + your answers:**
 

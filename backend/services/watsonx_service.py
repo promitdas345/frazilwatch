@@ -5,7 +5,7 @@ from typing import Optional
 WATSONX_API_KEY = os.getenv("WATSONX_API_KEY") or os.getenv("WATSONX_APIKEY")
 WATSONX_PROJECT_ID = os.getenv("WATSONX_PROJECT_ID")
 WATSONX_URL = os.getenv("WATSONX_URL", "https://us-south.ml.cloud.ibm.com")
-WATSONX_MODEL_ID = os.getenv("WATSONX_MODEL_ID", "meta-llama/llama-3-1-70b-instruct")
+WATSONX_MODEL_ID = os.getenv("WATSONX_MODEL_ID", "meta-llama/llama-3-3-70b-instruct")
 IAM_URL = "https://iam.cloud.ibm.com/identity/token"
 
 
