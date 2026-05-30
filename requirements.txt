@@ -1,0 +1,21 @@
+# FrazilWatch — Python dependencies
+# Python 3.11–3.13 required (the watsonx Orchestrate ADK does not support 3.14+)
+
+# --- watsonx Orchestrate ADK + CLI (the core) ---
+ibm-watsonx-orchestrate
+
+# --- real data: Environment Canada API calls ---
+requests>=2.31
+
+# --- simulated grid telemetry MCP server ---
+fastmcp>=0.2
+
+# --- tool input schemas (Granite reads these for tool-calling) ---
+pydantic>=2.6
+
+# --- bonus frontend backend (only if building the dashboard) ---
+fastapi>=0.110
+uvicorn>=0.29
+
+# --- optional: direct watsonx.ai SDK if calling Granite outside Orchestrate ---
+# ibm-watsonx-ai
