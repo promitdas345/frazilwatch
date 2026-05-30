@@ -5,7 +5,7 @@ export function Report({ data }) {
   return (
     <div className="report-section">
       <div className="section-title" style={{ marginBottom: 12 }}>
-        Situation Report — Granite-3.0-8B-Instruct
+        Situation Report — Llama 3.3 70B Instruct
         <span
           className={`ai-badge ${ai_enhanced ? 'enhanced' : 'template'}`}
           style={{ marginLeft: 10 }}
