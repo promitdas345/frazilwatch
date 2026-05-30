@@ -80,17 +80,82 @@ App available at `http://localhost:5173`.
 
 ## IBM Orchestrate Tool Endpoints
 
-Each endpoint is registered as a tool in IBM Orchestrate and called by the corresponding agent:
+### Agent-facing tools (register these in Orchestrate)
 
-| Endpoint | Orchestrate Agent | What it does |
-|---|---|---|
-| `POST /tools/weather` | Weather Agent | Fetches live Environment Canada MSC GeoMet data for Bay d'Espoir area |
-| `POST /tools/marine` | Marine Agent | Gets marine/water temp conditions (DFO buoy or estimated) |
-| `POST /tools/risk` | Frazil Risk Agent | Deterministic frazil score from weather + marine data |
-| `POST /tools/recommendations` | Operations Advisor Agent | Applies grid constraint rules, issues action protocol |
-| `POST /tools/report` | Report Agent | Compiles report, calls watsonx.ai Granite for narrative |
+These are the tools the YAML agents call directly. Each maps to one tool name in the agent definition.
 
-### Request shapes
+| Tool name (in YAML) | Endpoint | Agent | What it does |
+|---|---|---|---|
+| `get_frazil_risk` | `POST /tools/get_frazil_risk` | climatology_agent | Fetches live EC weather, calculates frazil risk (LOW/ELEVATED/HIGH) |
+| `get_lil_load` | `POST /tools/get_lil_load` | dispatch_agent | Returns Labrador-Island Link load vs 785 MW ceiling |
+| `get_maritime_headroom` | `POST /tools/get_maritime_headroom` | dispatch_agent | Returns Maritime Link available import headroom |
+| `get_bde_unit_status` | `POST /tools/get_bde_unit_status` | dispatch_agent | Returns Bay d'Espoir unit status and island demand |
+
+#### `POST /tools/get_frazil_risk`
+```json
+{ "location": "Bay d'Espoir", "demo_mode": false }
+```
+Response:
+```json
+{
+  "risk_level": "LOW | ELEVATED | HIGH",
+  "risk_score": 85.2,
+  "temperature_c": -12.0,
+  "wind_speed_kmh": 28.0,
+  "water_temp_c": 0.3,
+  "window_hours": 6,
+  "explanation": "Air temperature -12°C and wind 28 km/h exceed both frazil thresholds...",
+  "data_quality": "real"
+}
+```
+
+#### `POST /tools/get_lil_load`
+No input required.
+```json
+{
+  "lil_load_mw": 781,
+  "lil_ceiling_mw": 785,
+  "lil_headroom_mw": 4,
+  "within_35mw_ceiling": true,
+  "status": "MAXED — only 4 MW headroom. LIL cannot absorb additional load without trip risk.",
+  "data_quality": "simulated"
+}
+```
+
+#### `POST /tools/get_maritime_headroom`
+No input required.
+```json
+{
+  "available_import_mw": 380,
+  "contract_rate_available": true,
+  "status": "Maritime Link has 380 MW import headroom available at contract rate.",
+  "data_quality": "simulated"
+}
+```
+
+#### `POST /tools/get_bde_unit_status`
+No input required.
+```json
+{
+  "bay_despoir_capacity_mw": 604,
+  "current_generation_mw": 598,
+  "unit_status": "ONLINE — all units generating at near-capacity",
+  "island_demand_mw": 1450,
+  "data_quality": "simulated"
+}
+```
+
+### Pipeline tools (internal / frontend use)
+
+| Endpoint | What it does |
+|---|---|
+| `POST /tools/weather` | Fetches live EC MSC GeoMet weather data |
+| `POST /tools/marine` | Gets marine/water temp (DFO buoy or estimated) |
+| `POST /tools/risk` | Deterministic frazil score from weather + marine |
+| `POST /tools/recommendations` | Applies grid constraint rules, issues action protocol |
+| `POST /tools/report` | Compiles report, calls watsonx.ai for narrative |
+
+### Request shapes (pipeline tools)
 
 **`/tools/weather`** and **`/tools/marine`**
 ```json

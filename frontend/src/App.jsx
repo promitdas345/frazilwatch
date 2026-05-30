@@ -6,6 +6,7 @@ import { DataCards } from './components/DataCards.jsx'
 import { GridMap } from './components/GridMap.jsx'
 import { Recommendations } from './components/Recommendations.jsx'
 import { Report } from './components/Report.jsx'
+import { OrchestratePanel } from './components/OrchestratePanel.jsx'
 
 const API = 'http://localhost:8000'
 
@@ -16,28 +17,46 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState(null)
   const [error, setError] = useState(null)
+  const [orchestrateData, setOrchestrateData] = useState(null)
+  const [orchestrateLoading, setOrchestrateLoading] = useState(false)
 
   const analyze = async (demoMode = false) => {
     setLoading(true)
+    setOrchestrateLoading(true)
     setError(null)
     setResults(null)
+    setOrchestrateData(null)
+
+    // Call both endpoints in parallel
+    const pipeline = fetch(`${API}/analyze-risk`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lat, lon, location_name: locationName, demo_mode: demoMode }),
+    })
+
+    const orchestrate = fetch(`${API}/orchestrate-chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ demo_mode: demoMode, message: '' }),
+    })
+
     try {
-      const res = await fetch(`${API}/analyze-risk`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          lat,
-          lon,
-          location_name: locationName,
-          demo_mode: demoMode,
-        }),
-      })
+      const res = await pipeline
       if (!res.ok) throw new Error(`API returned ${res.status}`)
       setResults(await res.json())
     } catch (e) {
       setError(e.message)
     } finally {
       setLoading(false)
+    }
+
+    try {
+      const oRes = await orchestrate
+      setOrchestrateData(await oRes.json())
+    } catch (e) {
+      setOrchestrateData({ error: e.message, response: null })
+    } finally {
+      setOrchestrateLoading(false)
     }
   }
 
@@ -104,11 +123,12 @@ export default function App() {
                 Demo Scenario — January 2026 reference conditions (not live data)
               </div>
             )}
-            <AgentTimeline workflow={results.agent_workflow} />
+            <AgentTimeline />
             <RiskDisplay risk={results.risk} />
             <DataCards weather={results.weather} marine={results.marine} />
             <GridMap cells={results.risk?.grid_cells} gridState={results.risk?.grid_state} />
             <Recommendations data={results.recommendations} />
+            <OrchestratePanel data={orchestrateData} loading={orchestrateLoading} demoMode={results.demo_mode} pipelineResults={results} />
             <Report data={results.report} />
           </>
         )}

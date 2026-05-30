@@ -442,6 +442,77 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .ai-badge.enhanced { background: #24a14820; color: var(--low); border: 1px solid var(--low); }
 .ai-badge.template { background: #6f6f6f20; color: #a8a8a8; border: 1px solid #6f6f6f; }
 
+/* Orchestrate Panel */
+.orchestrate-panel {
+  background: var(--surface);
+  border: 1px solid #0f62fe44;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.orchestrate-panel .section-title { display: flex; align-items: center; gap: 10px; }
+.badge-live {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 2px;
+  background: #0f62fe22;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  letter-spacing: 1px;
+}
+.manifest-grid { display: flex; flex-direction: column; gap: 8px; }
+.manifest-row {
+  display: flex;
+  gap: 16px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.blocked-row { border-color: var(--high); }
+.manifest-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+.manifest-value { font-size: 13px; color: var(--text); }
+.manifest-value.risk-high { color: var(--high); font-weight: 700; }
+.manifest-value.risk-elevated { color: var(--elevated); font-weight: 700; }
+.manifest-value.manifest-value.risk-low { color: var(--low); font-weight: 700; }
+.manifest-value.blocked { color: var(--high); }
+.manifest-actions {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.action-list { padding-left: 16px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+.manifest-justification {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+}
+.manifest-justification p { font-size: 13px; line-height: 1.6; }
+.raw-response {
+  font-size: 12px;
+  white-space: pre-wrap;
+  color: var(--text-secondary);
+  background: var(--card);
+  padding: 12px;
+  border: 1px solid var(--border);
+}
+.orchestrate-source {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
 /* Footer */
 .footer {
   background: var(--surface);

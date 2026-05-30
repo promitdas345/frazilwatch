@@ -7,7 +7,7 @@ description: >
   and grid capacity constraints, and issues a coordinated, pre-emptive grid
   response with a plain-English justification. This is the top-level agent the
   user/operator interacts with.
-llm: watsonx/ibm/granite-3-8b-instruct
+llm: watsonx/meta-llama/llama-3-3-70b-instruct
 style: react
 collaborators:
   - climatology_agent

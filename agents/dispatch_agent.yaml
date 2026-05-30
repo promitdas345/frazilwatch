@@ -6,7 +6,7 @@ description: >
   generation. Checks the Labrador-Island Link load against its 785 MW ceiling,
   Maritime Link import headroom, and current island demand. Use this agent to
   understand grid capacity and constraints during a generation threat.
-llm: watsonx/ibm/granite-3-8b-instruct
+llm: watsonx/meta-llama/llama-3-3-70b-instruct
 style: react
 instructions: >
   You are the Dispatch Agent for the FrazilWatch grid-protection system.

@@ -22,9 +22,9 @@ from typing import Optional
 BASE = "https://api.weather.gc.ca"
 HEADERS = {"User-Agent": "FrazilWatch-Hackathon/1.0 (MUN watsonx)"}
 
-# >>> SET THESE FROM verify_station.py OUTPUT <<<
-STATION_ID = "8400413"
-STATION_FIELD = "STATION_ID"   # whichever field verify_station.py found working
+# ST ALBAN'S — verified active 2026-05-28, ~40 km from Bay d'Espoir
+STATION_ID = "55398"
+STATION_FIELD = "STN_ID"
 
 # ---- Frazil thresholds (from published research; cite as "research-based") ----
 # These are defensible starting values. Tune for a clean demo.
@@ -34,18 +34,25 @@ FRAZIL_WIND_KMH = 20.0          # at/above this, surface mixing prevents ice cov
 
 
 def _latest_observation() -> Optional[dict]:
-    """Fetch the most recent hourly observation for the configured station."""
-    url = f"{BASE}/collections/climate-hourly/items"
-    params = {
-        STATION_FIELD: STATION_ID,
-        "limit": 1,
-        "sortby": "-LOCAL_DATE",
-        "f": "json",
-    }
-    r = requests.get(url, params=params, headers=HEADERS, timeout=30)
-    r.raise_for_status()
-    feats = r.json().get("features", [])
-    return feats[0]["properties"] if feats else None
+    """Fetch the most recent observation for the configured station.
+    Tries climate-hourly first, falls back to climate-daily."""
+    for collection in ("climate-hourly", "climate-daily"):
+        url = f"{BASE}/collections/{collection}/items"
+        params = {
+            STATION_FIELD: STATION_ID,
+            "limit": 1,
+            "sortby": "-LOCAL_DATE",
+            "f": "json",
+        }
+        try:
+            r = requests.get(url, params=params, headers=HEADERS, timeout=30)
+            r.raise_for_status()
+            feats = r.json().get("features", [])
+            if feats:
+                return feats[0]["properties"]
+        except Exception:
+            continue
+    return None
 
 
 def get_frazil_risk(ice_cover_present: bool = False) -> dict:
@@ -72,8 +79,8 @@ def get_frazil_risk(ice_cover_present: bool = False) -> dict:
     if not obs:
         return {"risk_level": "UNKNOWN", "error": "no recent observation returned"}
 
-    temp = obs.get("TEMP")
-    wind = obs.get("WIND_SPD")
+    temp = obs.get("TEMP") or obs.get("MEAN_TEMPERATURE")
+    wind = obs.get("WIND_SPD") or obs.get("SPEED_MAX_GUST") or 0
     when = obs.get("LOCAL_DATE")
 
     # Guard against missing fields
