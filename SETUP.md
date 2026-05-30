@@ -59,7 +59,7 @@ Create `.env` at the repo root (it is gitignored — NEVER commit it). Fill the
 placeholders with the values from Step 0:
 
 ```dotenv
-# ---- watsonx.ai (for Granite inference) ----
+# ---- watsonx.ai (for Llama 3 inference) ----
 WATSONX_APIKEY=<your_ibm_cloud_api_key>
 WATSONX_PROJECT_ID=<your_project_id>
 WATSONX_URL=https://us-south.ml.cloud.ibm.com
@@ -189,7 +189,7 @@ Do not start this until Step 8 passes.
 - **Agent import rejects a field** → ADK version drift; check docs, rename field.
 - **Weather tool returns UNKNOWN/error** → wrong station ID/field; re-run
   `verify_station.py` and update `weather_tool.py`.
-- **Granite not tool-calling** → ensure the tool is actually attached to the
+- **Llama 3 not tool-calling** → ensure the tool is actually attached to the
   agent and the agent `style: react`; check the tool description is clear.
 - **403 from the weather API** → add/keep the User-Agent header (already in the
   code); confirm you're on a normal network, not a restricted one.

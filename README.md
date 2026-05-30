@@ -1,7 +1,7 @@
 # FrazilWatch
 
 Predictive multi-agent system for frazil ice risk at Bay d'Espoir, NL.
-Built on IBM watsonx Orchestrate + Granite-3.0-8B-Instruct. IBM × MUN Hackathon 2026 — Team Namles.
+Built on IBM watsonx Orchestrate + Llama-3-1-70B-Instruct. IBM × MUN Hackathon 2026 — Team Namles.
 
 ---
 
@@ -14,7 +14,7 @@ React Frontend
             ├─► POST /tools/marine        ◄── IBM Orchestrate Marine Agent
             ├─► POST /tools/risk          ◄── IBM Orchestrate Frazil Risk Agent
             ├─► POST /tools/recommendations ◄── IBM Orchestrate Operations Advisor Agent
-            └─► POST /tools/report        ◄── IBM Orchestrate Report Agent → watsonx.ai Granite
+            └─► POST /tools/report        ◄── IBM Orchestrate Report Agent → watsonx.ai Llama 3
 ```
 
 IBM Orchestrate contains the real agents. The backend exposes tool endpoints that Orchestrate agents call. The frontend calls `/analyze-risk` which chains all tools in sequence.
@@ -52,7 +52,7 @@ API available at `http://localhost:8000`. Docs at `http://localhost:8000/docs`.
 | `WATSONX_API_KEY` | IBM Cloud → Manage → API keys |
 | `WATSONX_PROJECT_ID` | watsonx.ai → project → Manage tab |
 | `WATSONX_URL` | `https://us-south.ml.cloud.ibm.com` (default) |
-| `WATSONX_MODEL_ID` | `ibm/granite-3-8b-instruct` (default) |
+| `WATSONX_MODEL_ID` | `meta-llama/llama-3-1-70b-instruct` (default) |
 
 Without credentials the backend still works — it uses a local template for the report narrative.
 
@@ -195,6 +195,6 @@ Real weather data in May will return LOW risk — use Demo Mode for the judging 
 | Marine | DFO MEDS buoy network | Real when available |
 | Marine fallback | FrazilWatch fjord estimator | Estimated |
 | Grid telemetry | Built-in constants (NL Hydro SCADA is proprietary) | Simulated |
-| Risk reasoning | watsonx.ai Granite-3.0-8B-Instruct | AI-enhanced |
+| Risk reasoning | watsonx.ai Llama-3-1-70B-Instruct | AI-enhanced |
 
 Every field in the API response includes a `data_quality` label: `real`, `estimated`, `fallback`, or `demo`.

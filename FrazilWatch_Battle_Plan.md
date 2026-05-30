@@ -1,7 +1,7 @@
 # FrazilWatch — Team Namles · 48-Hour Battle Plan
 ### IBM x MUN watsonx Hackathon · May 29–31, 2026
 
-> **The one-liner:** A predictive multi-agent AI system that detects frazil-ice formation at Bay d'Espoir hours before it chokes the intakes, then autonomously coordinates the NL grid response — pre-emptive offload, Maritime Link imports, industrial load-shed, public conservation alert — before the lights go out. Built on watsonx Orchestrate + Granite-3.0-8B-Instruct, triggered by **real live Environment Canada data**.
+> **The one-liner:** A predictive multi-agent AI system that detects frazil-ice formation at Bay d'Espoir hours before it chokes the intakes, then autonomously coordinates the NL grid response — pre-emptive offload, Maritime Link imports, industrial load-shed, public conservation alert — before the lights go out. Built on watsonx Orchestrate + Llama-3-1-70B-Instruct, triggered by **real live Environment Canada data**.
 
 ---
 
@@ -29,7 +29,7 @@
    │  grid state) │               │ Dispatch            │───▶│ resolves the │
    └──────────────┘               │ (LIL vs 785MW)      │    │ conflict,    │
                                   └─────────────────────┘    │ acts via     │
-                                                              │ Granite      │
+                                                              │ Llama 3      │
                                                               └──────┬───────┘
                                                                      │
                                                           ┌──────────▼──────────┐
@@ -49,7 +49,7 @@
 | Layer | Tool | Notes |
 |---|---|---|
 | Orchestration | watsonx Orchestrate + ADK | `pip install --upgrade ibm-watsonx-orchestrate`, Python 3.11–3.13 |
-| Reasoning model | `watsonx/ibm/granite-3-8b-instruct` | function-calling optimized, Apache 2.0 |
+| Reasoning model | `watsonx/meta-llama/llama-3-1-70b-instruct` | function-calling optimized, Apache 2.0 |
 | Real data | MSC GeoMet OGC API | `https://api.weather.gc.ca/` — no key, CQL2 filtering, CSV export |
 | Simulated data | Python MCP server (FastMCP) | grid telemetry — LIL load, Maritime headroom, unit status |
 | Backend glue | FastAPI | wraps tools, connects to Orchestrate |
@@ -63,7 +63,7 @@
 | Person | Lane | Owns |
 |---|---|---|
 | **Promit** | Architecture + Orchestrate | Agent YAML, Supervisor prompt, overall integration, demo direction |
-| **Zubayer** | Granite + agent behavior | Prompt engineering, deterministic logic, tool-call formatting, SwarmState |
+| **Zubayer** | Llama 3 + agent behavior | Prompt engineering, deterministic logic, tool-call formatting, SwarmState |
 | **Hassan** | IBM platform + live data | Env Canada pipeline (he has the IBM agentic AI cert), API verification |
 | **Rayanul** | MCP + data + story | MCP grid server, JSON schemas, demo scenario, video script/ops |
 
@@ -98,7 +98,7 @@ Two IBM Cloud env seats: **Promit + Hassan** (already the strongest platform pai
 
 ### PHASE 3 — Sunday early (hours 28–34): Polish + frontend (if time)
 - [ ] **Rayanul + Promit:** IF agents work in Orchestrate, build the React dashboard (Leaflet map + agent feed + JSON output card). FastAPI wrapper connects it to Orchestrate. **This is a bonus, not a requirement.**
-- [ ] **Zubayer:** Tune the Granite justification output — make the plain-English explanation crisp and judge-readable.
+- [ ] **Zubayer:** Tune the Llama 3 justification output — make the plain-English explanation crisp and judge-readable.
 - [ ] **Hassan:** Final data sanity check — make sure the live weather pull still works on demo day.
 
 ### PHASE 4 — Sunday (hours 34–40): The video (this wins points)
@@ -144,9 +144,9 @@ Two IBM Cloud env seats: **Promit + Hassan** (already the strongest platform pai
   2. Maritime Link import request (at contract rate, before crisis pricing)
   3. Targeted industrial load-shed (interruptible-contract customers)
   4. Public conservation pre-alert
-  5. Granite-written situation report for human operators
+  5. Llama 3-written situation report for human operators
 
-**The output:** Clean `action_manifest.json` on screen + a plain-English justification written by Granite. Human-in-the-loop: the AI coordinates, the operator approves.
+**The output:** Clean `action_manifest.json` on screen + a plain-English justification written by Llama 3. Human-in-the-loop: the AI coordinates, the operator approves.
 
 **The numbers to memorize:** 785 MW (the ceiling), 6 hours (the lead time), 1967 (last time BdE went fully offline before Jan 2026), ~604 MW (BdE capacity lost).
 
@@ -168,10 +168,10 @@ Two IBM Cloud env seats: **Promit + Hassan** (already the strongest platform pai
 - Climatology Agent crosses the threshold → frazil alert.
 - Dispatch Agent reports LIL at 781 MW.
 - Supervisor faces the conflict, REJECTS the obvious fix, executes the alternative protocol.
-- Show the JSON manifest + Granite's plain-English justification appearing.
+- Show the JSON manifest + Llama's plain-English justification appearing.
 
 **3:15–4:15 — The Architecture**
-> "Three specialist agents, one supervisor, powered by Granite-3.0-8B-Instruct. Real weather data through Environment Canada's API. Grid telemetry through a Model Context Protocol server. The supervisor uses deterministic logic — not guesswork — so it never hallucinates a grid command."
+> "Three specialist agents, one supervisor, powered by Llama-3-1-70B-Instruct. Real weather data through Environment Canada's API. Grid telemetry through a Model Context Protocol server. The supervisor uses deterministic logic — not guesswork — so it never hallucinates a grid command."
 
 **4:15–5:00 — The Impact**
 > "This gives operators 6 hours of lead time instead of zero. It turns divers-in-the-water into a planned, controlled response. One prevented event saves millions in emergency imports and avoided-blackout costs. And frazil ice threatens every cold-climate hydro operator on Earth — from BC Hydro to Hydro-Québec to Norway. NL Hydro is the beachhead."
@@ -183,7 +183,7 @@ Two IBM Cloud env seats: **Promit + Hassan** (already the strongest platform pai
 **Ask the IBM mentors (Saturday 10am):**
 1. "Does this Supervisor-Collaborator setup match the multi-agent patterns you've seen score well in Orchestrate?"
 2. "For the simulated grid data, is an MCP server the right approach, or do you recommend OpenAPI tool import?"
-3. "Any gotchas with Granite-3.0-8B-Instruct tool-calling we should know about before we build the prompts?"
+3. "Any gotchas with Llama-3-1-70B-Instruct tool-calling we should know about before we build the prompts?"
 
 **Hard Q&A questions + your answers:**
 
@@ -193,7 +193,7 @@ Two IBM Cloud env seats: **Promit + Hassan** (already the strongest platform pai
 
 - *"What if the AI is wrong / what if the weather forecast is off?"* → "The AI coordinates; the human operator approves every action. It's decision support with deterministic guardrails, not autonomous grid control. The cost of a false positive — pre-warming Holyrood — is tiny next to the cost of a missed event."
 
-- *"Why watsonx and not just a script?"* → "Because the value is the multi-agent reasoning under conflicting constraints. A script can't weigh frazil risk against transmission limits against demand and pick the non-obvious response. Granite's tool-calling and Orchestrate's agent orchestration are doing real work."
+- *"Why watsonx and not just a script?"* → "Because the value is the multi-agent reasoning under conflicting constraints. A script can't weigh frazil risk against transmission limits against demand and pick the non-obvious response. Llama's tool-calling and Orchestrate's agent orchestration are doing real work."
 
 - *"How does it scale / what's the business?"* → "NL Hydro is the proof of concept. Frazil affects every cold-climate hydro operator — BC Hydro, Hydro-Québec, Norwegian utilities, the Columbia River system. Same architecture, swap the data sources. It's IBM's reference demo for the hydro sector."
 

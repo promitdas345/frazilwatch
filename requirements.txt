@@ -10,12 +10,12 @@ requests>=2.31
 # --- simulated grid telemetry MCP server ---
 fastmcp>=0.2
 
-# --- tool input schemas (Granite reads these for tool-calling) ---
+# --- tool input schemas (Llama 3 reads these for tool-calling) ---
 pydantic>=2.6
 
 # --- bonus frontend backend (only if building the dashboard) ---
 fastapi>=0.110
 uvicorn>=0.29
 
-# --- optional: direct watsonx.ai SDK if calling Granite outside Orchestrate ---
+# --- optional: direct watsonx.ai SDK if calling Llama 3 outside Orchestrate ---
 # ibm-watsonx-ai

@@ -303,7 +303,7 @@ async def analyze_risk(input: LocationInput):
                 "agent": "Report Agent",
                 "status": "complete",
                 "tool_endpoint": "POST /tools/report",
-                "description": "Generated situation report via watsonx.ai Granite",
+                "description": "Generated situation report via watsonx.ai Llama 3",
             },
         ],
         "orchestrated_by": "IBM watsonx Orchestrate",

@@ -136,7 +136,7 @@ export default function App() {
 
       <footer className="footer">
         <span>FrazilWatch · Team Namles · IBM × MUN watsonx Hackathon 2026</span>
-        <span>Powered by IBM watsonx Orchestrate + Llama 3.3 70B Instruct</span>
+        <span>Powered by IBM watsonx Orchestrate + Llama-3-1-70B-Instruct</span>
       </footer>
     </div>
   )

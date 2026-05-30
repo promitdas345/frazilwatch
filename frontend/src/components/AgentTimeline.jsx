@@ -38,7 +38,7 @@ export function AgentTimeline() {
       </div>
       <div className="orchestrate-note">
         <strong>IBM watsonx Orchestrate</strong> coordinates the three agents above using{" "}
-        <strong>llama-3-3-70b-instruct</strong>. The supervisor applies deterministic rules to resolve
+        <strong>llama-3-1-70b-instruct</strong>. The supervisor applies deterministic rules to resolve
         conflicts between frazil risk and grid-capacity limits.
       </div>
     </div>

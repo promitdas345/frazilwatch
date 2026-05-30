@@ -8,7 +8,7 @@ a frazil-ice formation risk score.
 
 Wrap this as an MCP tool (see grid_mcp_server.py for the pattern) OR register
 it as an ADK Python tool. The function signature + docstring + type hints are
-what Granite reads to learn how to call it — keep them clean.
+what Llama 3 reads to learn how to call it — keep them clean.
 
   pip install requests pydantic
 
